@@ -50,36 +50,89 @@ public class Calculator_Per_Hand extends Application {
         root.setHgap(10);
         root.setVgap(10);
         //add to gris cell bycell
-        root.add(btnadd,0,0);
-        root.add(btnsub,1,0);
-        root.add(btnmul,0,1);
-        root.add(btndiv,1,1);
-        root.add(txtnum1,0,2);
-        root.add(txtnum2,1,2);
-        
+        root.add(btnadd, 0, 0);
+        root.add(btnsub, 1, 0);
+        root.add(btnmul, 0, 1);
+        root.add(btndiv, 1, 1);
+        root.add(txtnum1, 0, 2);
+        root.add(txtnum2, 1, 2);
+
         //last 2 row´s span across 2 columns
         //col,rol, colspan, rowspan
-        root.add(lblanswer,0,1,2,1);
-        root.add(lblanswer,0,4,2,1);
-        
-        
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        root.add(lblanswer, 0, 3, 2, 1);
+        root.add(lblanswer, 0, 4, 2, 1);
 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        setWidths();
 
-//        StackPane root = new StackPane();
-//        root.getChildren().add(btn);
+        attachCode();
+
         Scene scene = new Scene(root, 300, 250);
-
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Mathtastic 1.0");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public void setWidths() {
+
+        txtnum1.setPrefWidth(70);
+        txtnum2.setPrefWidth(70);
+        btnadd.setPrefWidth(70);
+        btnsub.setPrefWidth(70);
+        btnmul.setPrefWidth(70);
+        btndiv.setPrefWidth(70);
+        btnclear.setPrefWidth(70);
+        lblanswer.setPrefWidth(150);
+
+    }
+
+    public void attachCode() {
+
+        btnadd.setOnAction(event -> btncode(event));
+        btnsub.setOnAction(event -> btncode(event));
+        btnmul.setOnAction(event -> btncode(event));
+        btndiv.setOnAction(event -> btncode(event));
+        btnclear.setOnAction(event -> btncode(event));
+
+    }
+
+    public void btncode(ActionEvent event) {
+
+        int num1;
+        int num2;
+        int answer;
+        char symbol;
+
+        if (event.getSource() == btnclear) {
+
+            txtnum1.setText("");
+            txtnum2.setText("");
+            txtnum2.setText("?");
+            txtnum2.requestFocus();
+            return;
+        }
+        num1 = Integer.parseInt(txtnum1.getText());
+        num2 = Integer.parseInt(txtnum2.getText());
+        if (event.getSource() == btnadd) {
+            symbol = '+';
+            answer = num1 + num2;
+        } else if (event.getSource() == btnsub) {
+
+            symbol = '-';
+            answer = num1 - num2;
+
+        } else if (event.getSource() == btnmul) {
+
+            symbol = 'x';
+            answer = num1 * num2;
+
+        } else{
+            symbol='/';
+            answer = num1/num2;
+        }
+        
+        //Zeigt das Ergebnis im AnswerLabel an
+        lblanswer.setText("" + num1 + symbol + num2 + " = " + answer);
+                        
     }
 
     /**
