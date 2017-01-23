@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calculator_per_hand;
+package calculatorperhand;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author SenfDietze
  */
-public class Calculator_Per_Hand extends Application {
+public class CalculatorPerHand1 extends Application {
 
     TextField txtnum1, txtnum2;
     Button btnadd, btnsub, btndiv, btnmul, btnclear;
@@ -29,7 +29,6 @@ public class Calculator_Per_Hand extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        GridPane root = new GridPane();
 
 // make the controls
         txtnum1 = new TextField();
@@ -37,13 +36,15 @@ public class Calculator_Per_Hand extends Application {
         btnadd = new Button("+");
         btnsub = new Button("-");
         btnmul = new Button("*");
-        btndiv = new Button("+");
+        btndiv = new Button("/");
         btnclear = new Button("Clear");
         lblanswer = new Label("?");
         // center text in label
         lblanswer.setAlignment(Pos.CENTER);
         //apply ccs-like style to label (yes, youcan);
-        lblanswer.setStyle("-fx-border-color: #000; fx-padding: ");
+        lblanswer.setStyle("-fx-border-color: #000; -fx-padding: 5px; ");
+
+        GridPane root = new GridPane();
         //put container 
         root.setAlignment(Pos.CENTER);
         //setspacing between controls in grid
@@ -60,7 +61,7 @@ public class Calculator_Per_Hand extends Application {
         //last 2 row´s span across 2 columns
         //col,rol, colspan, rowspan
         root.add(lblanswer, 0, 3, 2, 1);
-        root.add(lblanswer, 0, 4, 2, 1);
+        root.add(btnclear, 0, 4, 2, 1);
 
         setWidths();
 
@@ -87,52 +88,46 @@ public class Calculator_Per_Hand extends Application {
 
     public void attachCode() {
 
-        btnadd.setOnAction(event -> btncode(event));
-        btnsub.setOnAction(event -> btncode(event));
-        btnmul.setOnAction(event -> btncode(event));
-        btndiv.setOnAction(event -> btncode(event));
-        btnclear.setOnAction(event -> btncode(event));
+        btnadd.setOnAction(e -> btncode(e));
+        btnsub.setOnAction(e -> btncode(e));
+        btnmul.setOnAction(e -> btncode(e));
+        btndiv.setOnAction(e -> btncode(e));
+        btnclear.setOnAction(e -> btncode(e));
 
     }
 
-    public void btncode(ActionEvent event) {
+    public void btncode(ActionEvent e) {
 
         int num1;
         int num2;
         int answer;
         char symbol;
 
-        if (event.getSource() == btnclear) {
+        if (e.getSource() == btnclear) {
 
             txtnum1.setText("");
             txtnum2.setText("");
-            txtnum2.setText("?");
-            txtnum2.requestFocus();
+            lblanswer.setText("?");
+            txtnum1.requestFocus();
             return;
         }
         num1 = Integer.parseInt(txtnum1.getText());
         num2 = Integer.parseInt(txtnum2.getText());
-        if (event.getSource() == btnadd) {
+        if (e.getSource() == btnadd) {
             symbol = '+';
             answer = num1 + num2;
-        } else if (event.getSource() == btnsub) {
-
+        } else if (e.getSource() == btnsub) {
             symbol = '-';
             answer = num1 - num2;
-
-        } else if (event.getSource() == btnmul) {
-
+        } else if (e.getSource() == btnmul) {
             symbol = 'x';
             answer = num1 * num2;
-
-        } else{
-            symbol='/';
-            answer = num1/num2;
+        } else {
+            symbol = '/';
+            answer = num1 / num2;       
         }
-        
-        //Zeigt das Ergebnis im AnswerLabel an
+        //show sum
         lblanswer.setText("" + num1 + symbol + num2 + " = " + answer);
-                        
     }
 
     /**
